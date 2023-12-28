@@ -1,0 +1,17 @@
+{
+    "default_empty": {
+        "policy_assignments": [],
+        "policy_definitions": [
+            "Enforce-Resource-Tags",
+            "Enforce-RG-Tags"
+        ],
+        "policy_set_definitions": [
+            "MyPolicySet"
+        ],
+        "role_definitions": [],
+        "archetype_config": {
+            "parameters": {},
+            "access_control": {}
+        }
+    }
+}

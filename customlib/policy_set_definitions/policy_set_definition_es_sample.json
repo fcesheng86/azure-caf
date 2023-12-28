@@ -1,0 +1,73 @@
+{
+  "name": "MyPolicySet",
+  "type": "Microsoft.Authorization/policySetDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "policyType": "Custom",
+    "description": "Sample Policy Set",
+    "displayName": "My Policy Set",
+    "metadata": {
+      "category": "Tags"
+    },
+    "parameters": {
+      "EnforceRGTags-Owner": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Owner",
+          "description": "Specifies the Owner of the Resource Group"
+        }
+      },
+      "EnforceRGTags-Department": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Department",
+          "description": "Specifies the Department that the Resource Group belongs to"
+        }
+      },
+      "EnforceResourceTags-Owner": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Owner",
+          "description": "Specifies the Owner of the resource"
+        }
+      },
+      "EnforceResourceTags-Department": {
+        "type": "String",
+        "metadata": {
+          "displayName": "Department",
+          "description": "Specifies the Department that the resource belongs to"
+        }
+      }
+    },
+    "policyDefinitions": [
+      {
+        "policyDefinitionReferenceId": "Resources must have mandatory tagging applied",
+        "policyDefinitionId": "${current_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Enforce-Resource-Tags",
+        "parameters": {
+          "Owner": {
+            "value": "[parameters('EnforceResourceTags-Owner')]"
+          },
+          "Department": {
+            "value": "[parameters('EnforceResourceTags-Department')]"
+          }
+        },
+        "groupNames": []
+      },
+      {
+        "policyDefinitionReferenceId": "Resource groups must have mandatory tagging applied",
+        "policyDefinitionId": "${current_scope_resource_id}/providers/Microsoft.Authorization/policyDefinitions/Enforce-RG-Tags",
+        "parameters": {
+          "Owner": {
+            "value": "[parameters('EnforceRGTags-Owner')]"
+          },
+          "Department": {
+            "value": "[parameters('EnforceRGTags-Department')]"
+          }
+        },
+        "groupNames": []
+      }
+    ],
+    "policyDefinitionGroups": []
+  }
+}
