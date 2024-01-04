@@ -11,10 +11,10 @@ variable "root_name" {
 # Call the caf-enterprise-scale module directly from the Terraform Registry
 # pinning to the latest version
 
-resource "azurerm_management_group" "sample_mgmt_grp" {
-  display_name = "mysampleorg"
-  name         = "mysampleorg"
-}
+# resource "azurerm_management_group" "sample_mgmt_grp" {
+#   display_name = "mysampleorg"
+#   name         = "mysampleorg"
+# }
 
 # resource "azurerm_management_group" "child_mgmt_grp" {
 #   display_name = "myorg-online-example-1"
@@ -27,23 +27,22 @@ module "caf-enterprise-scale" {
   source           = "Azure/caf-enterprise-scale/azurerm"
   version          = "5.0.3"
   default_location = "eastus"
-  # insert the 2 required variables here
-  root_parent_id = data.azurerm_client_config.core.tenant_id
-  root_id        = "myorg"
-  root_name      = "My Organization"
+  root_parent_id   = data.azurerm_client_config.core.tenant_id
+  root_id          = "myorg"
+  root_name        = "My Organization"
 
-  #   deploy_demo_landing_zones = true
+  library_path = "${path.root}/customlib"
 
-  library_path              = "${path.root}/customlib"
   deploy_core_landing_zones = false
-
   custom_landing_zones = {
     "mysampleorg" = {
       display_name               = "${upper(var.root_id)} Example 1"
-      parent_management_group_id = "${var.root_id}-dummy"
-      subscription_ids           = []
+      parent_management_group_id = ""
+      subscription_ids = [
+        #insert your subscription here
+      ]
       archetype_config = {
-        archetype_id   = "default_empty"
+        archetype_id   = "example_archetype"
         parameters     = {}
         access_control = {}
       }

@@ -1,0 +1,34 @@
+{
+  "name": "Enforce-Storage-Tags",
+  "type": "Microsoft.Authorization/policyDefinitions",
+  "apiVersion": "2021-06-01",
+  "scope": null,
+  "properties": {
+    "displayName": "Storage must have mandatory tagging applied",
+    "policyType": "Custom",
+    "mode": "All",
+    "description": "Enforce tags on Storage Accounts",
+    "metadata": {
+      "version": "1.0.0",
+      "category": "Tags"
+    },
+    "policyRule": {
+      "if": {
+        "allOf": [
+          {
+            "field": "type",
+            "equals": "Microsoft.Storage/storageAccounts"
+          },
+          {
+            "field": "tags",
+            "exists": false
+          }
+        ]
+      },
+      "then": {
+        "effect": "deny"
+      }
+    },
+    "parameters": {}
+  }
+}
